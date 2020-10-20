@@ -10,3 +10,5 @@ t7 = trainer.new({name: "Rick Ross", yrs_expierience: 15, cost: 9000, about_me: 
 t8 = trainer.new({name: "Casey Frey", yrs_expierience: 1, cost: 700, about_me: "To inspire and successfully coach the lifestyle changes for optimal health + wellness!"})
 t9 = trainer.new({name: "Hillary Clinton", yrs_expierience: 22, cost: 13000, about_me: "Get rid of fat faster than I can get rid of emails!"})
 t10 = trainer.new({name: "Ben Shapiro", yrs_expierience: 7, cost: 4000, about_me: "Hypotheticaly speaking, you would lose alot of weight if I were your trainer."})
+
+
