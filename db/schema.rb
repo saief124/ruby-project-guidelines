@@ -24,7 +24,9 @@ ActiveRecord::Schema.define(version: 3) do
   end
 
   create_table "workouts", force: :cascade do |t|
-    t.string "name"
+    t.string "trainer_name"
+    t.string "trainee"
+    t.string "exercises_done"
   end
 
 end
