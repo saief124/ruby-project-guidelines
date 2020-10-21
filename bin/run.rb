@@ -22,7 +22,11 @@ def list_trainers
     end
 end
 
-
+def bmi_calculator(b, c)
+    # 703 * weight(lbs) / height(in)^2
+    bmi = (703 * b / (c^2))
+    puts "\n Your Body Mass Index is #{bmi}"
+end
 
 def get_user_info
  puts "Enter your name"
@@ -34,7 +38,10 @@ def get_user_info
   w=gets.chomp
   puts "Enter your height in centimeter"
   h=gets.chomp
-  User.create(:name=>n, :gender=>g, :weight=>w, :height=>h)
+  a = User.create(:name=>n, :gender=>g, :weight=>w, :height=>h)
+  b = a.weight
+  c = a.height
+
 #   puts "Great you are now in our database"
 #   puts "Do you want to create a record? y/n"
 #   s=gets.chomp

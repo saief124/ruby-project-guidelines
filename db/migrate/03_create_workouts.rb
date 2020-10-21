@@ -7,6 +7,7 @@ class CreateWorkouts < ActiveRecord::Migration[5.2]
             #t.time :time_end
             #t.datetime :workout_date
             t.string :exercises_done
+            t.integer :workout_id
         end
     end
 end

@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
 
     def add_user_info
         #prompt user for name, location, goals, gender, weight, height and add them to the table
+        def initialize
+
+        end
     end
 
     def match_trainers
@@ -11,7 +14,7 @@ class User < ActiveRecord::Base
     end
 
     def create_workouts
-    
+        
     end
     
     def update_workouts
