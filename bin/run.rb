@@ -22,45 +22,90 @@ def list_trainers
     end
 end
 
+def existing_user(member) #member needs to be an instance of the user class
+    
+    puts "Welcome to your Fitness Blog #{member.name}!"
+    puts "-----------------These are the features we offer--------------------------------
+        Create a workout    Update a Workout    See my Trainers    View My Workout 
+        My starting Weight  My starting BMI     Weight change      BMI change
+--------------------------------------------------------------------------------"
+    puts "My Starting Weight = #{member.weight}"
+    puts "My Workouts = #{member.workouts}"
+    puts "My Trainers = #{member.trainers}"
+    #  prompt= TTY::Prompt.new
+    #  m=prompt.select("What would you like to do?", %w(Create_Workout, Update_Workout, View_Trainers, View_Workouts, View_Starting_Weight, View_Starting_BMI, View_Weight_Change, View_BMI_change))
+    #     if m=Create_Workout
+    #         #create_workout
+    #         puts "Not Finished"
+    #     end
+    #     if m=Update_Workout
+    #         #update_workout
+    #         puts "Not Finished"
+    #     end 
+    #     if m=View_Trainers
+    #         puts "#{member.trainers}"
+    #     end
+    #     if m=View_Workouts
+    #         puts "#{member.workouts}"
+    #     end
+    #     if m=View_Starting_Weight
+    #         puts "#{member.weight}"
+    #     end
+    #     if m=View_Starting_BMI
+    #        # bmi_calculator
+    #        puts "Not Finished"
+    #     end
+    #     if m=View_Weight_Change
+    #         #weight_change
+    #         puts "Not Finished"
+    #     end    
+    #     if m=View_BMI_change
+    #         #bmi_change
+    #         puts "Not Finished"
+    #     end
+       
+end
+
+#def create_workout
+#end
+
+#def update_workout
+#end
+
+#def bmi_calculator
+#end
 
 
 def get_user_info
- puts "Enter your name"
-  n=gets.chomp
-  puts "Enter your gender"
-  g=gets.chomp
-  puts "The Following data will be used to calculate your starting BMI"
-  puts "Enter your weight in kilogram"
-  w=gets.chomp
-  puts "Enter your height in centimeter"
-  h=gets.chomp
-  User.create(:name=>n, :gender=>g, :weight=>w, :height=>h)
-#   puts "Great you are now in our database"
-#   puts "Do you want to create a record? y/n"
-#   s=gets.chomp
-#     if s=='y'
-#         create_workouts
-#     elsif s=='n'
-#         list_trainers
-#     else
-#         puts "Not a valid response, please enter y or n"
-#     end 
+    prompt = TTY::Prompt.new
+    n= prompt.ask("What is your name?", default: ENV["USER"])
+    g= prompt.select("Are you male or female?", %w(Male Female))
+    w= prompt.ask("Enter your weight in pounds", default: ENV["e.g 185"])
+    h= prompt.ask("Enter your height in inches", default: ENV["e.g 67, 1ft=12in"])
+    
+  a=User.create(:name=>n, :gender=>g, :weight=>w, :height=>h)
+  
+  puts "---------------------------------------------------
+  Great you are now in our database!
+  We will now take you over to the options for existing user
+  ----------------------------------------------------------"
+ existing_user(a)
 end
 
 def prompt_user
-puts "Are you a first time user? y/n"
-opt=gets.chomp
+    puts "Are you a first time user? y/n"
+    opt=gets.chomp
     if opt==y
-    get_user_info
+    get_user_info # Gets and stores user info in the users table
     elsif opt==n
-    list_trainers
+    existing_user # Takes us to options for existing_user
     else 
     puts "Not a valid response, please enter y or n"
     end
 end
 
 def quit?
-     puts "Would you like to exit ? y/n"
+    puts "Would you like to exit ? y/n"
     op=gets.chomp
         if op==y
         exit
@@ -71,7 +116,8 @@ def quit?
         end
 end
     welcome_message
-
+    list_trainers
+    #prompt_user
     binding.pry 
    
 
