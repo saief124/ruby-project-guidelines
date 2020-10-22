@@ -12,7 +12,7 @@ t6 = Trainer.create({name: "Kieth Cozart", yrs_exp: 12, cost: 6500, about_me: "Y
 t7 = Trainer.create({name: "Rick Ross", yrs_exp: 15, cost: 9000, about_me: "Sculpt and tone with me while improving balance, flexibility, stamina, and overall well being! "})
 t8 = Trainer.create({name: "Casey Frey", yrs_exp: 1, cost: 700, about_me: "To inspire and successfully coach the lifestyle changes for optimal health + wellness!"})
 t9 = Trainer.create({name: "Hillary Clinton", yrs_exp: 22, cost: 13000, about_me: "Get rid of fat faster than I can get rid of emails!"})
-t10 = Trainer.create({name: "Ben Shapiro", yrs_exp: 7, cost: 4000, about_me: "Hypotheticaly speaking, you would lose alot of weight if I were your trainer."})
+t10= Trainer.create({name: "Ben Shapiro", yrs_exp: 7, cost: 4000, about_me: "Hypotheticaly speaking, you would lose alot of weight if I were your trainer."})
 
 #users
 
