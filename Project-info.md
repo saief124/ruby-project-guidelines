@@ -23,3 +23,8 @@ What are some stretch goals you have?
 -trainer side
 
 
+things left to do:
+
+-make everything one page (CLI)
+-get final methods working
+-
