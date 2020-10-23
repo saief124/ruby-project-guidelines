@@ -129,12 +129,19 @@ def delete_workouts(m3)
         m3.workouts.each do |w_out|
         puts "Exercises done: #{w_out.exercises_done}" + "| " + "Workout id: #{w_out.id}"
         end
-         puts "Enter the Workout id you want to delete"
-         w=gets.chomp
+        prompt = TTY::Prompt.new
+        
+        option= prompt.yes?("Are you sure you want to delete exercise?")
+        if option == true
+        w= prompt.ask("Enter the Workout id you want to delete", required: true)
+                      
          @wout=Workout.find_by(id: w)
          @wout.destroy
+        elsif option == false
+            existing_user(m3)
+        end
     end
-           #m3.workouts.each {|w_out1| puts w_out1.exercises_done} if m3.workouts !=[] 
+    
     #existing_user(m3)
     prompt_user
 end
