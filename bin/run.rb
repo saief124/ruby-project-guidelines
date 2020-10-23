@@ -52,8 +52,8 @@ def create_workout (user_c) # user_c is an instance of user class and is coming 
     Please select the trainer id from the list of trainers", %w(2 3 4 5 6 7 8 9 10 11)) # collect info for the trainer_id key by selecting trainer_id populated in seed file
     exercise= prompt.ask("Write your exercise BLOG here: for example Bench Press | Weight = 50lbs | 3 reps X 10 ", default: " I don't need exercise") # collect info on exercise key
     w=Workout.create(:exercises_done=>exercise, :trainer_id=>t, :user_id=>user_c.id) # creates instances of workout
-    #prompt_user                    # loop 
-    existing_user(user_c)
+    prompt_user                    # loop
+    #existing_user(user_c) 
 end
 
 def existing_user(member) # member is an instance of the user class and is coming from either get_user_info for new user
@@ -68,8 +68,8 @@ def existing_user(member) # member is an instance of the user class and is comin
     puts "
     
     ------------------------------------ These are the features we offer-------------------------------------------------------------
-    Create Exercises                       Retriev Exercises                     Update Exercises                  Delete Exercises
-    My starting Weight=#{w}                My starting BMI=#{bmi}                My starting Height=#{h}           View Trainers
+    Create Exercises                        Retrieve Exercises                      Update Exercises                 Delete Exercises
+    My starting Weight=#{w}                My starting BMI=#{bmi}               My starting Height=#{h}          View Trainers
     --------------------------------------------------------------------------------------------------------------------------------"
     prompt1 = TTY::Prompt.new
     a= prompt1.select("What would you like to do?") do |menu|       # return type of selection is string
@@ -80,6 +80,7 @@ def existing_user(member) # member is an instance of the user class and is comin
         menu.choice 'Update Exercises', -> {update_workout(member)}
         menu.choice 'Quit?', -> {exit}
         menu.choice 'Previous menu?', -> {prompt_user}
+        #menu.choice 'Reload?', -> {existing_user(member).reload}
          end
 end
 
@@ -102,7 +103,7 @@ def update_workout(m4)
         m4.workouts.each do |w_out|
            puts "Update your exercise record :    #{w_out.exercises_done}"
            upd=gets.chomp
-           w_out.update(exercises_done: upd)
+           puts w_out.update(exercises_done: upd)
         end
     end
     existing_user(m4)
@@ -133,8 +134,9 @@ def delete_workouts(m3)
          @wout=Workout.find_by(id: w)
          @wout.destroy
     end
-    existing_user(m3)
-    #prompt_user
+           #m3.workouts.each {|w_out1| puts w_out1.exercises_done} if m3.workouts !=[] 
+    #existing_user(m3)
+    prompt_user
 end
 
 
