@@ -52,76 +52,72 @@ def create_workout (user_c) # user_c is an instance of user class and is coming 
     Please select the trainer id from the list of trainers", %w(2 3 4 5 6 7 8 9 10 11)) # collect info for the trainer_id key by selecting trainer_id populated in seed file
     exercise= prompt.ask("Write your exercise details here:", default: ENV["Bench Press | Weight = 50lbs | 3 reps X 10"]) # collect info on exercise key
     w=Workout.create(:exercises_done=>exercise, :trainer_id=>t, :user_id=>user_c.id) # creates instances of workout
-          # loop 
-end
-
-def bmi_calculator(user_b)  # user_b is an instance of user class and is coming from existing_user method
-    # 703 * weight(lbs) / height(in)^2
-    b=user_b.weight
-    c=user_b.height
-    bmi = (703 * b / (c*c))
-    
-    return bmi
-    #prompt_user             #loop 
-end
-
-def bmi_change(user_bm)
-    
-    puts ("What is your current weight?")
-    w= gets.chomp
-    puts ("What is your current height? (This one is for you growing kids :D )")
-    h= gets.chomp
-    c_w=w.to_f
-    c_h=h.to_f
-    o_h= user_bm.height
-    o_w= user_bm.weight
-    old_bmi= (703 * o_w / (o_h * o_h))
-    new_bmi= (703 * c_w / (c_h * c_h))
-    bmi_change = new_bmi-old_bmi
-    bmi_change
-  
-end
-
-def weight_change(user_w)
-    old_weight=user_w.weight 
-    puts "Enter your current weight"
-    new_weight= gets.chomp
-    n_w=new_weight.to_f
-    w_change=n_w-old_weight
-    w_change
-    
-end
-def my_weight(user_r)
-    a= user_r.weight
-    b= a.to_f
-    return b
+    existing_user(user_c)      # loop 
 end
 
 def existing_user(member) # member is an instance of the user class and is coming from either get_user_info for new user
                           # or from prompt_user for returning user
-    
-    puts "--------------Welcome to your Fitness Blog #{member.name}!----------------"
+                          
     puts "
-    ---------------------These are the features we offer----------------------------
-        Create a workout           View my Trainers            View My Workout 
-        My starting Weight      My starting BMI      Weight change      BMI change
-    --------------------------------------------------------------------------------"
+    --------------Welcome to your Fitness Blog #{member.name}!----------------"
+    w=member.weight.to_f
+    h=member.height.to_f
+    bmi= (703 * w/ (h*h))
+    puts "
+    --------------------------------These are the features we offer--------------------------
+        Create Exercises       View Exercises        Delete Exercises     Update Exercises
+        My starting Weight=#{w}  My starting BMI=#{bmi}  My starting Height=#{h}  View Trainers
+    -----------------------------------------------------------------------------------------"
     prompt1 = TTY::Prompt.new
     a= prompt1.select("What would you like to do?") do |menu|       # return type of selection is string
-        menu.choice 'My starting Weight', -> {my_weight(member)}    # instance method that acts like a class method
-        menu.choice 'My starting BMI', -> {bmi_calculator(member)}  # instance method that acts like a class method
-        menu.choice 'Create a Workout', -> {create_workout(member)} # instantiate workouts, and connect trainer to user
+        menu.choice 'Create Exercises', -> {create_workout(member)}  # instantiate workouts, and connect trainer to user
+        menu.choice 'View Exercises', -> {get_workout(member)}     # associations, should work if a workout is created
+        menu.choice 'View Trainers', -> {get_trainers(member)}    # associations, should work if a workout is created
+        menu.choice 'Delete Exercises', -> {delete_workouts(member)}
         menu.choice 'Quit?', -> {exit}
-        if member.workouts != []                                     # no need to see the following info if you havent worked out yet
-         menu.choice 'View My Workouts', -> {member.workouts}        # associations, should work if a workout is created
-         menu.choice 'View My Trainers', -> {member.trainers}        # associations, should work if a workout is created
-         menu.choice 'BMI Change', -> {bmi_change(member)}           # relations to self
-         menu.choice 'Weight Change', -> {weight_change(member)}     # relations to self
-         menu.choice 'Quit?', -> {exit}
          end
-     end
-    
 end
+
+def get_workout(m2)
+
+    if m2.workouts==nil
+        puts "You don't have any workouts"
+    else
+        m2.workouts.each do |w_out| 
+        puts w_out.exercises_done
+        end
+    end
+    existing_user(m2)
+end
+
+def get_trainers(m1)
+    #binding.pry
+    if m1.trainers==nil
+        puts "You didn't work with any trainer"
+    else
+        m1.trainers.each do |tr|
+        puts "Name:#{tr.name}" + "| " + "Cost: #{tr.cost}" +"| " + "Years of experience: #{tr.yrs_exp}" +"| " + "About Me: #{tr.about_me}"
+        end
+    end
+    existing_user(m1)
+end
+
+def delete_workouts(m3)
+    
+    if m3.workouts==nil
+        puts "You don't have any workouts"
+    else
+        m3.workouts.each do |w_out|
+        puts "Exercises done: #{w_out.exercises_done}" + "| " + "Workout id: #{w_out.id}"
+        end
+         puts "Enter the Workout id you want to delete"
+         w=gets.chomp
+         @wout=Workout.find_by(id: w)
+         @wout.destroy
+    end
+    existing_user(m3)
+end
+
 
 def get_user_info # asks user for their information and stores the infromation in a table/database
     prompt = TTY::Prompt.new    
@@ -132,18 +128,20 @@ def get_user_info # asks user for their information and stores the infromation i
     
   a=User.create(:name=>n, :gender=>g, :weight=>w, :height=>h)
   
-  puts "---------------------------------------------------
+  puts "
+  ---------------------------------------------------
   Great you are now in our database!
   We will now take you over to the options for existing user
   ----------------------------------------------------------"
-  
-
- bmi_calculator(a)
- existing_user(a)
+  existing_user(a)
 end
 
-    welcome_message
-    prompt_user
-   # binding.pry 
+
+    
+
+   welcome_message
+   prompt_user
+
+   #binding.pry 
    
 puts "BYE BYE!"
