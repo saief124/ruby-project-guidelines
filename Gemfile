@@ -7,4 +7,5 @@ gem "pry"
 gem "require_all"
 gem "rake"
 gem "tty-prompt"
+gem 'tty-font'
 gem "activerecord",'~>5.2.1'
