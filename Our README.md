@@ -27,3 +27,5 @@ gem "tty-prompt"
 gem "activerecord",'~>5.2.1'
 
 and them in your gem file and bundle install from your terminal
+
+<!-- Run to lauch the terminal application ruby bin/run.rb -->
