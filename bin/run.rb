@@ -85,7 +85,7 @@ def existing_user(member) # member is an instance of the user class and is comin
 end
 
 def get_workout(m2)
-
+    binding.pry
     if m2.workouts==[]
         puts "----------------------You don't have any workouts---------------------"
     else
